@@ -381,9 +381,11 @@ Resources:
           groupadd -g 2000 scalelite-spool
           usermod -a -G scalelite-spool bigbluebutton
           
-          #copy customized code from bucket and paste into config files
-          aws s3 cp s3://bbb-scalablebucket/bigbluebutton.properties.yml usr/share/bbb-web/web-INF/classes/bigbluebutton.properties
-          aws s3 cp s3://bbb-scalablebucket/settings.yml usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
+          # copy customized code from bucket and paste into config files
+          wget https://bbb-scalablebucket.s3.eu-west-1.amazonaws.com/bigbluebutton.properties.yml
+          wget https://bbb-scalablebucket.s3.eu-west-1.amazonaws.com/settings.yml
+          cp bigbluebutton.properties.yml usr/share/bbb-web/web-INF/classes/bigbluebutton.properties
+          cp settings.yml usr/share/meteor/bundle/programs/server/assets/app/config/settings.yml
           bbb-conf --restart
 
           wget --tries=10  https://raw.githubusercontent.com/blindsidenetworks/scalelite/master/bigbluebutton/scalelite_post_publish.rb -O /usr/local/bigbluebutton/core/scripts/post_publish/scalelite_post_publish.rb
